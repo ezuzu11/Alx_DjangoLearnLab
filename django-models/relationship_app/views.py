@@ -3,6 +3,7 @@ from .models import Book
 from django.views.generic.detail import DetailView
 from .models import Library
 from django.contrib.auth.forms import UserCreationForm # refers to registration (User Authentication)
+from django.contrib.auth import login
 # Create your views here.
 
 #Function-based view to list all books
@@ -25,5 +26,5 @@ def register(request):
             return redirect('login') #After successfully creating the user, this redirects the user to the login page.
         else:
             form = UserCreationForm() #If the request is not a POST (e.g., it's a GET request), we create a blank instance of UserCreationForm to display an empty form.
-        return render(request, 'register.html', {'form': form}) #This renders the register.html template, passing the form instance to the template’s context.
+        return render(request, 'relationship_app/register.html', {'form': form}) #This renders the register.html template, passing the form instance to the template’s context.
     
