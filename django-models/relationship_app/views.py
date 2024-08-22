@@ -4,6 +4,8 @@ from django.views.generic.detail import DetailView
 from .models import Library
 from django.contrib.auth.forms import UserCreationForm # refers to registration (User Authentication)
 from django.contrib.auth import login
+## Role-Based Access Control 
+from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 
 #Function-based view to list all books
@@ -29,4 +31,26 @@ def register(request):
         else:
             form = UserCreationForm() #If the request is not a POST (e.g., it's a GET request), we create a blank instance of UserCreationForm to display an empty form.
         return render(request, 'relationship_app/register.html', {'form': form}) #This renders the register.html template, passing the form instance to the template’s context.
-    
+
+# Role-Based Access Control 
+
+## Admin View
+def admin_check(user):
+    return user.userprofile.role == 'Admin'
+@user_passes_test(admin_check)
+def admin_view(request):
+    return render(request, 'admin_view.html')
+
+## Librarian View
+def librarian_check(user):
+    return user.userprofile.role == 'Librarian'
+@user_passes_test(librarian_check)
+def librarian_view(request):
+    return render(request, 'librarian_view.html')
+
+## Member View
+def member_check(user):
+    return user.userprofile.role == 'Memeber'
+@user_passes_test(member_check)
+def member_view(request):
+    return render(request, 'member_view.html')
