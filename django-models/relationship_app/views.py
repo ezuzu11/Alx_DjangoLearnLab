@@ -40,19 +40,20 @@ def admin_check(user):
     return user.userprofile.role == 'Admin'
 @user_passes_test(admin_check)
 def admin_view(request):
-    return HttpResponse("Admin view accessed")
-    #return user.userprofile.role == 'Admin'
+    #return HttpResponse("Admin view accessed")
+    return render(request, 'relationship_app/admin_view.html')
 
 ## Librarian View
 def librarian_check(user):
     return user.userprofile.role == 'Librarian'
 @user_passes_test(librarian_check)
 def librarian_view(request):
-    return HttpResponse("Librarian view accessed")
-
+    #return HttpResponse("Librarian view accessed")
+    return render(request, 'relationship_app/librarian_view.html')
 ## Member View
 def member_check(user):
     return user.userprofile.role == 'Member'
 @user_passes_test(member_check)
 def member_view(request):
-    return HttpResponse("Member view accessed")
+    #return HttpResponse("Member view accessed")
+    return render(request, 'relationship_app/member_view.html')
