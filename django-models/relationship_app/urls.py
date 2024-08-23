@@ -13,7 +13,7 @@ urlpatterns = [
 
     # Role-Based Access Control 
     path('Admin/', views.admin_view, name='admin_view'),
-    path('Librarian/', views.librarian_view, name='librarian_view'),
+    path('Librarians/', views.librarian_view, name='librarian_view'),
     path('Member/', views.member_view, name='member_view'),
 
 ]
