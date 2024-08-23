@@ -45,7 +45,11 @@ def admin_view(request):
 
 ## Librarian View
 def librarian_check(user):
-    return user.userprofile.role == 'Librarians'
+    #Ensure user has a UserProfile before accessing the role
+    if hasattr(user, 'userprofile'):
+        return user.userprofile.role == 'Librarian'
+    return False
+    
 @user_passes_test(librarian_check)
 def librarian_view(request):
     #return HttpResponse("Librarian view accessed")
