@@ -41,7 +41,7 @@ def admin_check(user):
 @user_passes_test(admin_check)
 def admin_view(request):
     return HttpResponse("Admin view accessed")
-    return user.userprofile.role == 'Admin'
+    #return user.userprofile.role == 'Admin'
 
 ## Librarian View
 def librarian_check(user):
