@@ -37,22 +37,22 @@ def register(request):
 
 ## Admin View
 def admin_check(user):
-    return user.userprofile.role == 'Admin'
+    return user.UserProfile.role == 'Admin'
 @user_passes_test(admin_check)
 def admin_view(request):
     return HttpResponse("Admin view accessed")
-    return user.userprofile.role == 'Admin'
+    return user.UserProfile.role == 'Admin'
 
 ## Librarian View
 def librarian_check(user):
-    return user.userprofile.role == 'Librarian'
+    return user.UserProfile.role == 'Librarian'
 @user_passes_test(librarian_check)
 def librarian_view(request):
     return HttpResponse("Librarian view accessed")
 
 ## Member View
 def member_check(user):
-    return user.userprofile.role == 'Memeber'
+    return user.UserProfile.role == 'Memeber'
 @user_passes_test(member_check)
 def member_view(request):
     return HttpResponse("Member view accessed")
