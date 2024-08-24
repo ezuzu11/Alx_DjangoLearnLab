@@ -87,7 +87,7 @@ def add_book(request):
 
 # Update book
 @permission_required('relationship_app.can_change_book', raise_exception=True)
-def update_book(request, book_id):
+def edit_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
     if request.method == 'POST':

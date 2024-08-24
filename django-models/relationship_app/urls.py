@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from .views import list_books, LibraryDetailView
 # Implementing Custom Permissions
-from .views import add_book_view, edit_book_view, delete_book_view
+from .views import add_book, edit_book, delete_book
 
 urlpatterns = [
     path('books/', list_books, name='list_books'),  # Function-based view URL
@@ -19,8 +19,8 @@ urlpatterns = [
     path('Member/', views.member_view, name='member_view'),
 
     # Implementing Custom Permissions
-    path('add_book/', add_book_view, name='add_book'),
-    path('edit_book/<int:book_id>/', edit_book_view, name='edit_book'),
-    path('delete_book/<int:book_id>/', delete_book_view, name='delete_book'),
+    path('add_book/', add_book, name='add_book'),
+    path('edit_book/<int:book_id>/', edit_book, name='edit_book'),
+    path('delete_book/<int:book_id>/', delete_book, name='delete_book'),
 
 ]
