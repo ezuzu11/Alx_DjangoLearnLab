@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+"""
 # Implementing Custom Permissions
 from django.contrib.auth.decorators import permission_required
 from .models import Book, Author
@@ -47,3 +48,4 @@ def delete_book(request, book_id):
         return redirect('book_list')  # Redirect to the book list view
 
     return render(request, 'relationship_app/confirm_delete.html', {'book': book})
+"""
