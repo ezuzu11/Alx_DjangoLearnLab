@@ -39,9 +39,25 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bookshelf',
     'relationship_app',
+    'csp',
 ]
 #Custom User Model
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+#  Configure Secure Settings
+DEBUG = False
+# Configure Browser-Side Protections:
+
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+# Enforce HTTPS for Cookies
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+#Configure CSP
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
+CSP_SCRIPT_SRC = ("'self'", 'https://ajax.googleapis.com')
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
