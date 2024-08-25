@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 # Custom User Model
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 # Create your models here.
@@ -35,6 +36,21 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        permissions = [
+            ("can_view", "Can view article"),
+            ("can_create", "Can create article"),
+            ("can_edit", "Can edit article"),
+            ("can_delete", "Can delete article"),
+        ]
+
+    
 """
     # Implementing Custom Permissions
     class Meta:
