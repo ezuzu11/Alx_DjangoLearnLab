@@ -57,6 +57,26 @@ SESSION_COOKIE_SECURE = True
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
 CSP_SCRIPT_SRC = ("'self'", 'https://ajax.googleapis.com')
+# Configure Django for HTTPS Support
+SECURE_SSL_REDIRECT = True
+
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+#Enforce Secure Cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+#Implement Secure Headers
+# Prevent your site from being framed (protects against clickjacking):
+X_FRAME_OPTIONS = 'DENY'
+# Prevent browsers from MIME-sniffing a response away from the declared content-type:
+SECURE_CONTENT_TYPE_NOSNIFF = True
+# Enable the browser’s XSS filtering to help prevent cross-site scripting attacks:
+SECURE_BROWSER_XSS_FILTER = True
+
+
+
 
 
 MIDDLEWARE = [
