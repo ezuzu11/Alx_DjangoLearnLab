@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from .models import Article
+from .models import Book
 
 @permission_required('bookshelf.can_view', raise_exception=True)
 def view_article(request, pk):
@@ -23,3 +24,7 @@ def delete_article(request, pk):
     article = get_object_or_404(Article, pk=pk)
     # Logic to delete the article
     pass
+
+def book_list(request):
+    books = Book.objects.all()  # Retrieve all books from the database
+    return render(request, 'bookshelf/book_list.html', {'books': books})
