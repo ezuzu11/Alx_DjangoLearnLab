@@ -17,7 +17,10 @@ User: The built-in Django user model, used to simulate authenticated users.
 
 2. Test Setup
 def setUp(self):
-    self.user = User.objects.create_user(username='testuser', password='testpass')
+    self.user = User.objects.create_user(username='testuser', password='testpass')# Log in the user
+        self.client.login(username= 'testuser', password= 'testpass')
+        
+
     self.token = Token.objects.create(user=self.user)
     self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
@@ -141,7 +144,7 @@ def test_order_books_by_publication_year(self):
     self.assertEqual(response.data[0]['title'], 'Book One')
     self.assertEqual(response.data[1]['title'], 'Book Two')
 
-    
+
 Explanation:
 test_order_books_by_publication_year(self): Tests if books can be ordered by their publication year.
 self.client.get(): Sends a GET request with the ordering query parameter.
