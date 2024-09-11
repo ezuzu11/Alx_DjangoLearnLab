@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, filters
 from .models import Book
-from .seriealizers import BookSerializer
+from .serializers import BookSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django_filters import rest_framework
