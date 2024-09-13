@@ -54,7 +54,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'django_blog.urls'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "blog/static",
 ]
 
 TEMPLATES = [
@@ -84,6 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
         'USER': 'ezu_blog',
+        'PASSWORD': 'ezu1411',
         'HOST': 'localhost',
         'PORT': '3306',
     }
