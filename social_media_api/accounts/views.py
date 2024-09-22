@@ -2,12 +2,14 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
-from rest_framework import status
+from rest_framework import status, generics
 from .models import CustomUser
 from .serializers import RegisterSerializer
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+from .models import Post
+from .serializers import PostSerializer
 
 # Create your views here.
 
@@ -42,3 +44,13 @@ def login(request):
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': str(token)}, status=status.HTTP_200_OK)
     return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class FeedView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        following_users = user.following.all()
+        return Post.objects.filter(author__in=following_users).order_by('-created_at')
+    
