@@ -11,8 +11,7 @@ from django.contrib.auth.models import User
 from .models import Post
 from .serializers import PostSerializer
 
-# Create your views here.
-
+'''
 @api_view(['POST'])
 def register(request):
     serializer = RegisterSerializer(data=request.data)
@@ -33,7 +32,22 @@ def unfollow_user(request, user_id):
     target_user = User.objects.get(id=user_id)
     request.user.following.remove(target_user)
     return Response({"message": f"You have unfollowed {target_user.username}."}, status=status.HTTP_200_OK)
+'''
 
+User = get_user_model()
+
+class FollowUserView(generics.GenericAPIView):
+    queryset = User.objects.all()  # Ensure CustomUser.objects.all() is here
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, user_id):
+        try:
+            target_user = self.get_queryset().get(id=user_id)
+        except User.DoesNotExist:
+            raise NotFound("User not found.")
+
+        request.user.following.add(target_user)
+        return Response({"message": f"You are now following {target_user.username}."}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def login(request):
