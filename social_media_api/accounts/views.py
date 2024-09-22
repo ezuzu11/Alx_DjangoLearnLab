@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .models import Post
 from .serializers import PostSerializer
-
+from rest_framework.exceptions import NotFound
 '''
 @api_view(['POST'])
 def register(request):
