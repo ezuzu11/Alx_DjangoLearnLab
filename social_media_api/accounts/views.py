@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
-from rest_framework import status, generics
+from rest_framework import status, generics, permissions
 from .models import CustomUser
 from .serializers import RegisterSerializer
 from django.contrib.auth import authenticate, get_user_model
@@ -38,7 +38,7 @@ User = get_user_model()
 
 class FollowUserView(generics.GenericAPIView):
     queryset = User.objects.all()  # Ensure CustomUser.objects.all() is here
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
         try:
