@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post, Comment #Comments
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import PostForm, CommentForm
-
+from django.db.models import Q #Q objects to filter posts based on their title, content, or tags.
 
 # Create your views here.
 
@@ -114,3 +114,16 @@ def CommentDeleteView(request, pk):
         comment.delete()
         return redirect('post_detail', pk=comment.post.pk)
     return render(request, 'blog/delete_comment.html', {'comment': comment})
+
+def search_posts(request):
+    query = request.GET.get('q')
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) | 
+            Q(content__icontains=query) | 
+            Q(tags__name__icontains=query)
+        ).distinct()
+    else:
+        posts = Post.objects.all()
+    
+    return render(request, 'blog/search_results.html', {'posts': posts})
