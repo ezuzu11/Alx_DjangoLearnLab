@@ -60,3 +60,10 @@ class UnlikePostView(generics.DestroyAPIView):
         post = Post.objects.get(id=pk)
         Like.objects.filter(user=request.user, post=post).delete()
         return response({"message": "You unliked the post."})
+    
+class NotificationListView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    #serializer_class = NotificationSerializer  # Create this serializer as needed
+
+    def get_queryset(self):
+        return self.request.user.notifications.all()
