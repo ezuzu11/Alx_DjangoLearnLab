@@ -5,6 +5,8 @@ from .serializers import PostSerializer, CommentSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import filters
 from notifications.models import Notification
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 # Create your views here.
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -40,7 +42,7 @@ class LikePostView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
-        post = Post.objects.get(id=pk)
+        post = get_object_or_404(Post, pk=pk)
         like, created = Like.objects.get_or_create(user=request.user, post=post)
 
         if created:  # If the like was created, generate a notification
@@ -50,8 +52,8 @@ class LikePostView(generics.CreateAPIView):
                 verb='liked your post',
                 target=post
             )
-            return response({"message": "You liked the post."})
-        return response({"message": "You have already liked this post."}, status=400)
+            return Response({"message": "You liked the post."})
+        return Response({"message": "You have already liked this post."}, status=400)
 
 class UnlikePostView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -59,7 +61,7 @@ class UnlikePostView(generics.DestroyAPIView):
     def delete(self, request, pk):
         post = Post.objects.get(id=pk)
         Like.objects.filter(user=request.user, post=post).delete()
-        return response({"message": "You unliked the post."})
+        return Response({"message": "You unliked the post."})
     
 class NotificationListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
